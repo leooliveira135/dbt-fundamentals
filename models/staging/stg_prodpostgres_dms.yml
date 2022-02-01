@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_packages
+    columns:
+      - name: customer_id
+        tests:
+            - unique
+            - not_null
+            
+  - name: stg_order
+    columns:
+      - name: order_id
+        tests:
+            - unique
+            - not_null
+      - name: package_type
+        tests:
+           - accepted_values:
+                values:
+                    - document
+                    - large_box
+                    - medium_box
+                    - box

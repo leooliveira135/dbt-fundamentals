@@ -21,7 +21,6 @@
 
 -- ),
 
-
 with packages as (
     select * from {{ ref('stg_packages') }}
 ),
@@ -50,6 +49,7 @@ final as (
         packages.customer_id,
         packages.created,
         packages.destination_confirmed_by_recipient,
+        sum(weight) as sum_weight,
         package_orders.first_order_date,
         package_orders.most_recent_order_date,
         coalesce(package_orders.number_of_orders, 0) as number_of_orders
@@ -57,6 +57,14 @@ final as (
     from packages
 
     left join package_orders using (customer_id)
+
+    group by
+        packages.customer_id,
+        packages.created,
+        packages.destination_confirmed_by_recipient,
+        package_orders.first_order_date,
+        package_orders.most_recent_order_date,
+        package_orders.number_of_orders
 
 )
 

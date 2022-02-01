@@ -35,8 +35,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   prodpostgres_dms:
+    staging:
+        +materialized: view
     marts:
       core:
           +materialized: table
-    staging:
-        +materialized: view

@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+    - name: prodpostgres_dms
+      description: A clone of a Postgres application database.
+      database: prod
+      tables:
+        - name: dispatch_package
+          description: Prod packages data
+          columns:
+            - name: id
+              description: Primary key for dispatch_package
+              tests:
+                - unique
+                - not_null
+
+        - name: dispatch_order
+          descriptions: Prod orders data
+          columns:
+            - name: id
+              description: Primary key for orders
+              loaded_at_field: created
+              freshness:
+                warn_after: {count: 12, period: hour}
+                error_after: {count: 12, period: hour}
+              tests:
+                - unique
+                - not_null
+    
+    - name: prodpostgres_glue
+      description: A clone of a Postgres application database.
+      database: prod
+      tables: 
+        - name: dispatch_packageannotation_0x7rtqjhke1hd
+          description: Prod annotation data
+          columns:
+            - name: id
+              description: Primary key for orders
+              tests:
+                - unique
+                - not_null
