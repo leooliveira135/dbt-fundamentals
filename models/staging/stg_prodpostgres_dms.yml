@@ -22,3 +22,12 @@ models:
                     - large_box
                     - medium_box
                     - box
+
+  - name: stg_annotation
+    columns:
+      - name: package_id
+        tests:
+          - relationships:
+              to: ref('stg_packages')
+              field: package_id
+            
